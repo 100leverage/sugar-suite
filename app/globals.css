@@ -1,26 +1,100 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:      #080808;
+  --surface: #111111;
+  --card:    #171717;
+  --border:  #262626;
+  --text:    #F5F0E8;
+  --muted:   #6B6460;
+  --gold:    #C9963A;
+  --gold-lt: #E8B84B;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ── Noise texture overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── Gold glow on headings ── */
+.gold-glow {
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(201,150,58,0.5), 0 0 40px rgba(201,150,58,0.25);
+}
+
+/* ── Eyebrow label ── */
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── Divider ── */
+.gold-divider {
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0 auto;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #2A2520; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* ── Gallery placeholder gradients ── */
+.gallery-ph-1  { background: linear-gradient(135deg, #1a0a05 0%, #3d1a08 100%); }
+.gallery-ph-2  { background: linear-gradient(135deg, #080d1a 0%, #0f1f35 100%); }
+.gallery-ph-3  { background: linear-gradient(135deg, #0d0d0d 0%, #2a1a0a 100%); }
+.gallery-ph-4  { background: linear-gradient(135deg, #1a1005 0%, #3d2a08 100%); }
+.gallery-ph-5  { background: linear-gradient(135deg, #05100a 0%, #0a2518 100%); }
+.gallery-ph-6  { background: linear-gradient(135deg, #120a1a 0%, #271040 100%); }
+.gallery-ph-7  { background: linear-gradient(135deg, #1a0808 0%, #3d1010 100%); }
+.gallery-ph-8  { background: linear-gradient(135deg, #0a0a1a 0%, #18182a 100%); }
+.gallery-ph-9  { background: linear-gradient(135deg, #101008 0%, #282810 100%); }
+
+/* ── Floating orb animation ── */
+@keyframes orb-drift {
+  0%   { transform: translate(0, 0) scale(1);      opacity: 0; }
+  15%  { opacity: 1; }
+  50%  { transform: translate(60px, -80px) scale(1.15); opacity: 0.6; }
+  85%  { opacity: 0.8; }
+  100% { transform: translate(0, 0) scale(1);      opacity: 0; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.1; transform: scale(1); }
+  50%       { opacity: 0.8; transform: scale(1.5); }
+}
+
+/* ── Menu tab underline ── */
+.menu-tab-active {
+  color: var(--gold);
+  border-bottom: 2px solid var(--gold);
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
