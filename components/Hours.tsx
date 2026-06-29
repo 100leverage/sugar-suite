@@ -27,7 +27,7 @@ export default function Hours() {
   const today = getTodayName();
 
   return (
-    <section id="hours" ref={ref} className="py-28 px-6 bg-[#0b0b0b]">
+    <section id="hours" ref={ref} className="py-28 px-6 bg-[#080808]">
       <div className="max-w-6xl mx-auto">
 
         {/* Heading */}
